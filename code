@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South Indian Recipe Finder</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>South Indian Recipe Finder</h1>
+        <select id="category">
+            <option value="all">All</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="desserts">Desserts</option>
+            <option value="snacks">Snacks</option>
+        </select>
+        <div id="recipe-list" class="recipe-list"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#category {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.recipe-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.recipe-card {
+    padding: 15px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.recipe-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.recipe-ingredients {
+    color: #555;
+}
+
+const recipes = [
+    { title: "Idli", category: "breakfast", ingredients: "Rice, Urad Dal, Salt" },
+    { title: "Dosa", category: "breakfast", ingredients: "Rice, Urad Dal, Fenugreek Seeds, Salt" },
+    { title: "Uttapam", category: "breakfast", ingredients: "Rice, Urad Dal, Onions, Tomatoes" },
+    { title: "Pongal", category: "breakfast", ingredients: "Rice, Moong Dal, Black Pepper" },
+    { title: "Upma", category: "breakfast", ingredients: "Rava, Mustard Seeds, Curry Leaves" },
+    { title: "Medu Vada", category: "breakfast", ingredients: "Urad Dal, Black Pepper, Curry Leaves" },
+    { title: "Sambar Rice", category: "lunch", ingredients: "Rice, Toor Dal, Vegetables, Tamarind" },
+    { title: "Curd Rice", category: "lunch", ingredients: "Rice, Yogurt, Mustard Seeds, Curry Leaves" },
+    { title: "Lemon Rice", category: "lunch", ingredients: "Rice, Lemon Juice, Peanuts" },
+    { title: "Mutton Biryani", category: "dinner", ingredients: "Rice, Mutton, Spices, Yogurt" },
+    { title: "Vegetable Kurma", category: "dinner", ingredients: "Mixed Vegetables, Coconut, Spices" },
+    { title: "Hyderabadi Chicken Biryani", category: "dinner", ingredients: "Basmati Rice, Chicken, Saffron" },
+    { title: "Rava Kesari", category: "desserts", ingredients: "Rava, Sugar, Ghee, Cardamom" },
+    { title: "Mysore Pak", category: "desserts", ingredients: "Gram Flour, Ghee, Sugar" },
+    { title: "Gulab Jamun", category: "desserts", ingredients: "Milk Powder, Sugar Syrup, Cardamom" },
+    { title: "Murukku", category: "snacks", ingredients: "Rice Flour, Sesame Seeds, Urad Dal" },
+    { title: "Bonda", category: "snacks", ingredients: "Potato, Chickpea Flour, Green Chilies" },
+    { title: "Vada Pav", category: "snacks", ingredients: "Potato, Pav Bread, Spices" },
+];
+const categorySelect = document.getElementById("category");
+const recipeList = document.getElementById("recipe-list");
+function loadRecipes(category) {
+    recipeList.innerHTML = ""; 
+    const filteredRecipes = category === "all" ? recipes : recipes.filter(r => r.category === category);
+    filteredRecipes.forEach(recipe => {
+        const recipeCard = document.createElement("div");
+        recipeCard.className = "recipe-card";
+        recipeCard.innerHTML = `
+            <div class="recipe-title">${recipe.title}</div>
+            <div class="recipe-ingredients"><strong>Ingredients:</strong> ${recipe.ingredients}</div>
+        `;
+        recipeList.appendChild(recipeCard);
+    });
+}
+
+// Event Listener
+categorySelect.addEventListener("change", (e) => loadRecipes(e.target.value));
+
+// Initial Load
+loadRecipes("all");
+
